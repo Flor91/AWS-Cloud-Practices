@@ -29,6 +29,62 @@ To deliver content to end users with lower latency, **Amazon CloudFront** (fast 
 - caches content at edge locations for high performance delivery of content
 - provides DDoS protection
 
+### Cloud Computing Models
+![Cloud Models](images/Cloud-Models.png)
+
+#### IaaS: Infrastructure as a Service
+Contains the basic building blocks for cloud IT
+Eg. VPC, EC2, EBS
+
+#### PaaS: Platform as a Service
+AWS manages the underlying infrastructure (usually hw and os)
+Eg. RDS, EMR, ElasticSearch
+
+#### SaaS: Software as a Service
+Completed product that is run and managed by the service provider. Mostly refers to end-user applications
+Eg. Web-based email, Office 365, Salesforce
+
+#### FaaS: Function as a Service or Serverless Computing
+Allows you to build and run applications and services without thinking about servers. 
+Eg. S3, Lambda, DynamoDB, SNS
+
+## AWS Solutions
+
+### [AWS Storage Solutions](https://mitrai.com/tech-guide/eight-types-of-aws-storage-services-explained/)
+
+![Storages](images/storage-options.png)
+
+![Storage Solutions](images/aws-storage-soutions.jpg)
+
+![Storages](images/using-aws-storage.jpg)
+
+![Storage Use Cases](images/AWS-Storage-use-cases.png)
+
+[Storage Cases](cases/storage-cases.md)
+
+### AWS Database Services
+
+RDS: Fully managed Database Service, makes easy to launch and scale DB on AWS. Services: MySQL (MariaDB, Aurora), PostgreSQL (std, Aurora PostgreSQL), Microsoft SQL Server, Oracle
+DynamoDB: NoSQL Database as a Service. Serverless Service. High speed, low latency performance.
+Redshift: Fast, fully managed, petabyte scalable data warehouse, based on the PostgreSQL engine. Perfect for Big Data solutions.
+ElastiCache: In memory data store in the cloud, allows to retrieve information from fast, fully managed, in memory caches.
+Database Migration Service (DMS): orchestrates the migration of databases over to AWS easily and securely. It also can migrate data between different database engines.
+Neptune: Fast, reliable, fully managed graph database. Optimized for storing relationships, and querying the graph with ms latency. 
+
+#### Amazon Relational Database Service
+
+(Amazon RDS) makes it easy to set up, operate, and scale a relational database in the cloud. It provides cost-efficient and resizable capacity while automating time-consuming administration tasks such as hardware provisioning, database setup, patching and backups. It frees you to focus on your applications so you can give them the fast performance, high availability, security and compatibility they need.
+
+![RDS](images/rds.png)
+
+#### DynamoDB
+![DynamoDB](images/dynamodb.jpg)
+
+![Comparison](images/database-options-on-aws.jpg)
+
+[AWS Database Services](https://www.sumologic.com/blog/migrating-aws-database-services/)
+[AWS Database Services Complete Overview: RDS vs Redshift vs DynamoDB vs SimpleDB](https://www.cloudberrylab.com/resources/blog/aws-database-services-complete-overview-rds-vs-redshift-vs-dynamodb-vs-simpledb/)
+
 ## Guides
  
 ### Overview of AWS
