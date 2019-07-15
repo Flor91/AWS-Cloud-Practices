@@ -1,8 +1,18 @@
 # AWS
 
 ![aws](images/awscloud.svg)
-  
-## What is AWS
+
+## About this Guide
+
+## Index
+1. What is AWS
+2. Cloud Computing Models
+3. AWS Solutions
+. Guides
+. Links
+. Links
+
+### What is AWS
 
 Data centers distributed Worldwide
 On-demand delivery of IT resources 
