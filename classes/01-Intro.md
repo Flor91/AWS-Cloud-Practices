@@ -1,4 +1,4 @@
-#Cloud Architect
+# Cloud Architect
 ## Clase 1 - Introducción a la nube
 
 #### Solutions Architect: 
