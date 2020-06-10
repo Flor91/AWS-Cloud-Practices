@@ -5,14 +5,14 @@
 #### Modelo de Responsabilidad compartida
 AWS es el responsable de proteger la infraestructura Subyacente, el usuario de todo lo que se coloque o conecte a la nube.
 
-![](images/c2/02-Seguridad-IAM-CLI/modelo-responsabilidad.png)
+![](images/02-Seguridad-IAM-CLI/modelo-responsabilidad.png)
 
 #### Disponibilidad: Regiones y Availability Zones
 Son ubicaciones aisladas dentro de las regiones de los data centers desde donde se originan y operan los servicios de nube publica.
 Cada region es completamente independiente, esto logra la mayor tolerancia a fallos y estabilidad posible.
 Las regiones son colecciones de AZs conectadas a traves de enlaces de baja latencia.
 
-![](images/c2/02-Seguridad-IAM-CLI/disponibilidad.png)
+![](images/02-Seguridad-IAM-CLI/disponibilidad.png)
 
 #### Seguridad y Redes
 
@@ -26,11 +26,11 @@ Las instancias EC2:
 - Realizar escaneos de puertos no autorizados siendo que estos son detectados e investigados
 
 *ACL: Access Control List
-![](images/c2/02-Seguridad-IAM-CLI/seguridad-redes.png)
+![](images/02-Seguridad-IAM-CLI/seguridad-redes.png)
 
 #### Uso de multiples credenciales
 
-![](images/c2/02-Seguridad-IAM-CLI/credenciales.png)
+![](images/02-Seguridad-IAM-CLI/credenciales.png)
 
 #### Tracking de API Calls: CloudTrail
 Servicio que loguea las llamadas APIs a un bucket de Amazon S3 para tener mejor visibilidad de la actividad de la cuenta.
@@ -44,14 +44,14 @@ Sobre cada llamada a la API se registran los siguientes datos:
 
 Esto ayuda a garantizar el cumplimiento de las politicas internas y estandares reglamentarios.
 
-![](images/c2/02-Seguridad-IAM-CLI/CloudTrail.png)
+![](images/02-Seguridad-IAM-CLI/CloudTrail.png)
 
 #### Seguridad de EC2: Key Pairs
 Uso de key pairs:
 - Las instancias EC2 Linux no tienen contrase;as y usan key pairs para el login SSH
 - Las instancias de Windows, utilizan un par de claves para obtener la contrasena de administrador y luego conectarse con RDP
 
-![](images/c2/02-Seguridad-IAM-CLI/key-pairs.png)
+![](images/02-Seguridad-IAM-CLI/key-pairs.png)
 
 #### Seguridad de EC2: Security groups
 
@@ -59,9 +59,9 @@ Uso de key pairs:
 - Cuando inicia una instancia, asocia uno o mas de estas a la misma
 - Por default deniega todo el trafico salvo los puertos de login
 
-![](images/c2/02-Seguridad-IAM-CLI/security-groups-1.png)
-![](images/c2/02-Seguridad-IAM-CLI/security-group-2.png)
-![](images/c2/02-Seguridad-IAM-CLI/security-groups-3.png)
+![](images/02-Seguridad-IAM-CLI/security-groups-1.png)
+![](images/02-Seguridad-IAM-CLI/security-group-2.png)
+![](images/02-Seguridad-IAM-CLI/security-groups-3.png)
 
 #### Encriptacion de Datos
 
@@ -80,7 +80,7 @@ AWS encripta los datos, de tal forma que si alguien quiere robar datos que esten
 
 Varios servicios de AWS ofrecen esta funcionalidad entre ellos S3, EBS, RDS
 
-![](images/c2/02-Seguridad-IAM-CLI/encryption.png)
+![](images/02-Seguridad-IAM-CLI/encryption.png)
 
 ### IAM - Identity and Access Management
 
@@ -92,7 +92,7 @@ Permite implementar politicas de control de acceso para controlar quien puede us
 
 Manejo de identidad, pero con mucho peso a los permisos para la interaccion entre servicios. Hace de filtro para todos los servicios.
 
-![](images/c2/02-Seguridad-IAM-CLI/iam.png)
+![](images/02-Seguridad-IAM-CLI/iam.png)
 
 No es:
 - No es un sistema de almacenamiento / autorizacion de identidad para aplicaciones
@@ -109,7 +109,7 @@ Hay 3 tipos:
 - Usuarios IAM
 - Roles
 
-![](images/c2/02-Seguridad-IAM-CLI/principals.png)
+![](images/02-Seguridad-IAM-CLI/principals.png)
 
 ##### Usuario Root
 
@@ -129,7 +129,7 @@ Hay 3 tipos:
 - Cuando un actor asume un rol, AWS provee un token de seguridad temporal (STS)
 - El token expira y puede durar de 15 minutos a 36 horas
 
-![](images/c2/02-Seguridad-IAM-CLI/roles.png)
+![](images/02-Seguridad-IAM-CLI/roles.png)
 
 #### Autenticacion
 
@@ -139,7 +139,7 @@ Hay 3 tipos:
 
 Cuando se crea un usuario de IAM es necesario crearle un login y/o access key para qeu pueda interactuar con los servicios.
 
-![](images/c2/02-Seguridad-IAM-CLI/auth.png)
+![](images/02-Seguridad-IAM-CLI/auth.png)
 
 #### Policies
 
@@ -150,9 +150,9 @@ Una Policy es un JSON, contiene uno o mas permisos que definen:
 - Servicio Afectado
 - Recurso: Nombre de recurso (ARN) especifica la infraestructura especifica de AWS a la que se aplica este permiso
 
-![](images/c2/02-Seguridad-IAM-CLI/policies.png)
+![](images/02-Seguridad-IAM-CLI/policies.png)
 
-![](images/c2/02-Seguridad-IAM-CLI/policies-2.png)
+![](images/02-Seguridad-IAM-CLI/policies-2.png)
 
 *ARN: Amazon Resource Name
 El forma de los ARN varia ligeramente entre los servicios, pero el formato es basicamente:
@@ -180,7 +180,7 @@ Una Policy se puede asociar con un grupo de dos maneras:
 1. Group Policy: Solo existen en el contexto del grupo al que estan vinculadas.
 2. Managed Policies: Idem usuarios pero asociadas a grupos
 
-![](images/c2/02-Seguridad-IAM-CLI/policies-assoc.png)
+![](images/02-Seguridad-IAM-CLI/policies-assoc.png)
 
 #### Resolucion de permisos
 
@@ -192,7 +192,7 @@ Cuando hay multiples plocies que se aplican al mismo recurso los permisos aplica
 - Si no se encuentra "alow" o "deny", se rechaza la solicitud
 
 ### AWS CLI
-![](images/c2/02-Seguridad-IAM-CLI/02d8b0dc.png)
+![](images/02-Seguridad-IAM-CLI/02d8b0dc.png)
 
 Herramienta Open Source que brinda acceso directo a las APIs publicas de los servicios de AWS desde la linea de comandos del SO.
 
