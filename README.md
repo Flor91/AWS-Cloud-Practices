@@ -1,4 +1,4 @@
 # AWS
 
-![aws](general/images/awscloud.svg)
+![aws](resources/images/awscloud.svg)
 

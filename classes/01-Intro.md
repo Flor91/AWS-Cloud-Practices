@@ -10,11 +10,11 @@ Tiene conocimiento técnico suficiente para poder diagramar una solución compue
 
 _En este curso se va a ir más allá de la certificación, se va a agregar experiencia hands on._
 
-![os](images/c1/Solution-Architect-Role.jpg)
+![os](images/01-Intro/Solution-Architect-Role.jpg)
 
 ### 1. Virtualizacion
 
-![os](images/c1/os-kernel-user.png)
+![os](images/01-Intro/os-kernel-user.png)
 
 1. Recursos de sistema
     - Memoria RAM - almacenamiento temporal
@@ -24,7 +24,7 @@ _En este curso se va a ir más allá de la certificación, se va a agregar exper
 3. Aplicaciones de usuarios necesitan recursos para correr
 
 #### Evolución:
-![os](images/c1/vms-containers.png)
+![os](images/01-Intro/vms-containers.png)
 
 Se empieza a desacoplar el acceso al HW
 
@@ -37,9 +37,9 @@ A < capas de VMs se pueden tener > VMs
 
 ### 2. Cloud Computing
 Modelos - dependiendo de lo que me da el Cloud Provider
-![os](images/c1/modelos-servicios.png)
+![os](images/01-Intro/modelos-servicios.png)
 
-![os](images/c1/iaas-paas-saas.png)
+![os](images/01-Intro/iaas-paas-saas.png)
 
 **IaaS**: Infrastructure-as-a-Service
 Nos da host, configuro todo
@@ -54,7 +54,7 @@ El usuario tienen la app funcionando y simple
 Trade-off para elegir arquitectura y proveedores entre $/tiempo/desarrollo/conocimiento, 
 y entre parte de negocio/técnica
 
-![os](images/c1/cloud-computing.png)
+![os](images/01-Intro/cloud-computing.png)
 
 - Cloud Privadas - No accesibles desde la Web
 - Cloud Publicas - Accesibles desde la www
@@ -72,13 +72,13 @@ Se paga solo por los servicios que se utilizan, ayudando aÑ
  - ejecutar la infraestructura de la manera más eficiente,
  - escalar a medida que cambian las necesidades del negocio. 
 
-![os](images/c1/public-cloud-services.png)
+![os](images/01-Intro/public-cloud-services.png)
 
 Los proveedores ofrecen web interfaces y APIs para poder aprovisionar y administrar los recursos que se necesiten y se paga mensualmente por lo utilizado.
 
 El mercado actual se encuentra fuertemente concentrado en tres competidores donde Amazon tiene una ventaja significativa sobre el resto.
 
-![os](images/c1/cloud-providers.png)
+![os](images/01-Intro/cloud-providers.png)
 
 #### Ventajas:
 1. Gastos variables vs inversion inicial en HW y SW
@@ -97,14 +97,14 @@ El mercado actual se encuentra fuertemente concentrado en tres competidores dond
 
 #### Conceptos Relevantes 
 ##### High-Availability vs Tolerancia a Fallas:
-![os](images/c1/HA.png)
+![os](images/01-Intro/HA.png)
  Alta disponibilidad: tenemos un servicio o app en un VM o servicio virtual
  Si esta maquina falla, el servicio se recupera corriendo en otra maquina virtual
  Pero va a tener un tiempo de baja mientras ocurre este failover
  
  HA es el conjunto de Hw, sw y configuraciones que permiten que un sistema se recupere rápidamente en caso de falla (minimiza el tiempo de inactividad)
 
-![os](images/c1/FT.png)
+![os](images/01-Intro/FT.png)
 Fault tolerance: La falla de uno de los componentes (si mi servicio corre en varias maquinas) el usuario no lo nota
 Se hace con un LB y un autoscaling group que aumenta o disminuye en base a metricas, y si tiene alguna falla se rutea a alguna de las maquinas que si esta funcionando bien
 
@@ -116,27 +116,27 @@ Trade-off: mejor serivio vs. mas $
 Como escalo mi servicio si le estan faltando recursos (memoria, cpu, etc)
 
 Vertical: Le doy mas poder a mi maquina
-![os](images/c1/vertical-scaling.png)
+![os](images/01-Intro/vertical-scaling.png)
 
 Horizontal: Agrego mas maquinas, sumando las capacidades. Ademas vas a necesitar un orquestrador.
-![os](images/c1/horizontal-scaling.png)
+![os](images/01-Intro/horizontal-scaling.png)
 
 ##### Clusters:
 Coordina el trabajo de varias maquinas para que trabajen como si fueran una sola super machine con sus recursos sumados
-![os](images/c1/clusters.png)
+![os](images/01-Intro/clusters.png)
 
 ##### Arquitectura en capas:
 En general las arquitecturas de apps desarrolladas por capas, tienen 3 capas. 
 Si los 3 estan presentes en la misma base de codigo, se denomina aplicacion monolitica. Estos son dificiles de escalar.
 Esto sucede aunque cada capa corra en serivicios independientes, pero de una sola instancia.
 
-![os](images/c1/capas.png)
+![os](images/01-Intro/capas.png)
 
 ##### Monolitica vs componentes independientes - microservicios:
 Si las capas se implementan como componentes aislados estos se pueden aprovisionar en maquinas o sistemas separados.
 Esto facilita el escalado y manejo de cada capa de manera independiente ya que a menudo tienen necesidades diferentes.
 
-![os](images/c1/componentes.png)
+![os](images/01-Intro/componentes.png)
 
 ##### RPO y RTO:
 **Objetivo del Punto de Recuperacion**: punto al que se revertira el sistema en caso de falla. El intervalo entre el momento de la falla y el RPO define la cantidad de datos que se perderian y que la empresa puede tolerar.
@@ -147,11 +147,11 @@ Otras soluciones son tener un servicio principal y uno secundaria,
 **Objetivo de Tiempo de Recuperacion**: duracion del tiempo y el nivel de servicio dentro del cual se debe restaurar un proceso de negocio despues de un desastre para evitar consecuencias inaceptables asocuadas con una interrupcion den la continuidad.
 RTO = Cuanto tiempo tardo en recuperar despues de la notificacion del proceso comercial?
 
-![os](images/c1/rpo-rto.png)
+![os](images/01-Intro/rpo-rto.png)
 
 ##### Estrategias de recupero
 No todos los servicios ofrecen todas las estrategias, y hay que ver los trade offs para poder armar la solucion.
-![os](images/c1/recupero.png)
+![os](images/01-Intro/recupero.png)
 
 ##### Cost Efficient Cost Effective
 
@@ -166,40 +166,40 @@ Speech AWS - vos enfocate en tu area de expertise, y nosotros nos encargamos de 
 
 ##### Porque AWS:
 Cuadrantes de Gartner: Amazon es el lider del mercado
-![os](images/c1/aws-quadrant.png)
+![os](images/01-Intro/aws-quadrant.png)
 
 ### 4. Amazon Web Services
 AWS surge en 2006, ofreciento serivicios de infrastructura de IT a empresas en forma de servicios web.
 
 AWS ofrece plataforma de infra altamente confiable, escalable y de bajo costo en la nube.
-![os](images/c1/aws.png)
+![os](images/01-Intro/aws.png)
 
 ##### Clientes:
-![os](images/c1/clients.png)
+![os](images/01-Intro/clients.png)
 
 ##### Data Centers de AWS:
-![os](images/c1/regions.png)
+![os](images/01-Intro/regions.png)
 
 ##### Availability Zones:
-![os](images/c1/zones.png)
+![os](images/01-Intro/zones.png)
 
 ##### Servicios de AWS:
-![os](images/c1/aws-services.png)
+![os](images/01-Intro/aws-services.png)
 
 ##### Modelo de Responsabilidad Compartida:
 Para cada servicio hay que entender que partes de la seguridad son responsabilidad del usuario y cuales no.
-![os](images/c1/responsibilities.png)
+![os](images/01-Intro/responsibilities.png)
 
 ##### Cuentas de AWS:
-![os](images/c1/accounts.png)
+![os](images/01-Intro/accounts.png)
 
 ##### Billing en AWS:
-![os](images/c1/account.png)
+![os](images/01-Intro/account.png)
 
 ##### AWS Well Architected Framework:
 -- Lo suelen tomar:
 
-![os](images/c1/good-practices.png)
+![os](images/01-Intro/good-practices.png)
 
 ##### Reduccion de costos
 1. Elegir el servicio mas adecuado segun nuestro caso de uso, know how, equipo, madurez
