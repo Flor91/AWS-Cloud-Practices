@@ -2,6 +2,8 @@
 ## Clase 1 - Introducción a la nube
 
 #### Solutions Architect: 
+![](images/01-Intro/solutions-architect.png)
+
 Consultor, conocedor de los distintos servicios y herramientas de AWS. Conocimiento mas teorico, como diseñar las soluciones.
 
 Rol en el medio entre cliente y desarrolladores / implementadores de la solución.
