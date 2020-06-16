@@ -23,8 +23,12 @@ Habilidades que se evalúan con la certificación
 4. [S3: Simple Storage Service 🗄️](classes/04-S3.md)
     - Práctica: [Montar un sitio web estatico desde S3](practicas/4-practica-S3.md)
     
-5. [ELB: Elastic Load Balancing, ASG: Auto Scaling Groups](classes/05-ELB-ASG.md)
+5. [ELB: Elastic Load Balancing, ASG: Auto Scaling Groups ⚖️](classes/05-ELB-ASG.md)
     - Práctica: [Montar un sitio web utilizando varias instancias EC2](practicas/5-practica-ELB.md)
 
-6. [Route 53](classes/06-Route53.md)
+6. [Route 53 📛](classes/06-Route53.md)
     - Práctica: [Route 53](practicas/6-practica-Route53.md)
+
+7. [Docker 🐳](classes/07-Docker.md)
+    - Práctica: [Docker](practicas/7-practica-docker.md)
+    
