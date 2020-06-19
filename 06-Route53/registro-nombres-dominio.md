@@ -128,7 +128,7 @@ A de mi pagina
 
   ![](images/a-dh.png)
 
-- dig CNAME www.digitalhouse.com +short  
+- dig CNAME www.digitalhouse.com +short
    ![](images/cname-dh.png)
 
 - Para informacion mas comprensiva [Ping.eu](ping.eu)
