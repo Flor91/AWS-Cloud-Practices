@@ -6,7 +6,7 @@ FROM python:3.6
 WORKDIR /app
 
 # Contexto: Copia todo el contenido de este directerio adentro del container en la carpeta /app
-COPY 7-docker-container /app
+COPY . /app
 
 # Correr un comando, en este caso para instalar las dependencias en requirements.txt
 RUN pip install -r requirements.txt
