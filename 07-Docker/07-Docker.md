@@ -15,18 +15,21 @@
 - Estructura del proyecto node
 - Ejemplo del archivo `package.json`
 - Comandos para instalar las dependencias, y para correr la aplicacion
+
 ![](images/nodejs.png)
 
 ### Proyecto Java
 - Estructura del proyecto java
 - Ejemplo del archivo `pom.xml`
 - Comandos para instalar las dependencias, y para correr la aplicacion
+
 ![](images/java.png)
 
 ### Proyecto Python
 - Estructura del proyecto python
 - Ejemplo del archivo `requirements.txt`
 - Comandos para instalar las dependencias, y para correr la aplicacion
+
 ![](images/python.png)
 
 ### Otras plataformas
@@ -60,6 +63,7 @@
 
 ## Docker
 Nuestra ballena preferida al rescate: **Docker**
+
 ![](images/docker-bill.png)
 
 ### Virtualización
@@ -74,7 +78,6 @@ Nuestra ballena preferida al rescate: **Docker**
 - Docker provee una forma de ejecutar software de forma segura, en un entorno aislado, empaquetado y con todas sus dependencias y librerías, esta instancia se conoce como contenedor.
 
 ![](images/docker-virtualization.png)
-min 39:00 
 
 ##Propiedades de los contenedores 
 - Un contenedor es un proceso del sistema operativo **autocontenido**.
@@ -88,6 +91,17 @@ min 39:00
 ## Arquitectura de Docker
 
 ![](images/architecture-docker.png)
+
+Es un proceso del sistema, corre como un daemon.
+Cuando uno lo ejecuta tiene 2 partes:
+
+- El daemon: Docker engine / Docker server
+- El cliente: Docker CLI - Interfaz de usuario
+
+Estas dos partes se comunican entre si con una API REST.
+
+- Con el CLI podemos maneja los contenedores y las imagenes.
+- El Daemon se encarga de las redes, volumenes y paquetes.
 
 [Documentación Docker](https://docs.docker.com/get-started/overview/)
 
@@ -143,6 +157,7 @@ Esta portabilidad permite resolver el problema de compatibilidad entre sistemas 
 ![](images/docker-container-7.png)
 
 ## Arquitectura docker
+
 ![](images/arch-docker.png)
 
 # Docker: Construcción de Imagen.
