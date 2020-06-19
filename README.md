@@ -12,23 +12,23 @@ Habilidades que se evalúan con la certificación
 ---
 ## Temas:
 
-1. [Introduccion a las tecnologias de la Nube ☁️](classes/01-Intro.md) 
+1. [Introduccion a las tecnologias de la Nube ☁️](01-Introduccion-Cloud/01-Intro.md) 
 
-2. [Seguridad, IAM: Identity and Access Management, AWS CLI 👮](classes/02-Seguridad-IAM-CLI.md)
-    - Práctica: [Instalacion AWSCLI y algunos comandos](practicas/2-practica-iam-awscli.md)
+2. [Seguridad, IAM: Identity and Access Management, AWS CLI 👮](02-IAM-AWSCLI/02-Seguridad-IAM-CLI.md)
+    - Práctica: [Instalacion AWSCLI y algunos comandos](02-IAM-AWSCLI/2-practica-iam-awscli.md)
 
-3. [EC2: Elastic Compute Cloud 🖥️](classes/03-EC2.md)
-    - Práctica: [EC2 On-Hands Lab](practicas/3-practica-EC2.pdf)
+3. [EC2: Elastic Compute Cloud 🖥️](03-EC2/03-EC2.md)
+    - Práctica: [EC2 On-Hands Lab](03-EC2/3-practica-EC2.pdf)
 
-4. [S3: Simple Storage Service 🗄️](classes/04-S3.md)
-    - Práctica: [Montar un sitio web estatico desde S3](practicas/4-practica-S3.md)
+4. [S3: Simple Storage Service 🗄️](04-S3/04-S3.md)
+    - Práctica: [Montar un sitio web estatico desde S3](04-S3/4-practica-S3.md)
     
-5. [ELB: Elastic Load Balancing, ASG: Auto Scaling Groups ⚖️](classes/05-ELB-ASG.md)
-    - Práctica: [Montar un sitio web utilizando varias instancias EC2](practicas/5-practica-ELB.md)
+5. [ELB: Elastic Load Balancing, ASG: Auto Scaling Groups ⚖️](05-ELB/05-ELB-ASG.md)
+    - Práctica: [Montar un sitio web utilizando varias instancias EC2](05-ELB/5-practica-ELB.md)
 
-6. [Route 53 📛](classes/06-Route53.md)
-    - Práctica: [Route 53](practicas/6-practica-Route53.md)
+6. [Route 53 📛](06-Route53/06-Route53.md)
+    - Práctica: [Route 53](06-Route53/6-practica-Route53.md)
 
-7. [Docker 🐳](classes/07-Docker.md)
-    - Práctica: [Docker](practicas/7-practica-docker.md)
+7. [Docker 🐳](07-Docker/07-Docker.md)
+    - Práctica: [Docker](07-Docker/7-practica-docker.md)
     
