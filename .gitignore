@@ -1,4 +1,7 @@
 participantes.md
+credentials/
+*.pem
+.idea/
 
 # Byte-compiled / optimized / DLL files
 __pycache__/

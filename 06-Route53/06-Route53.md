@@ -47,6 +47,8 @@ Sería muy difícil navegar una World Wide Web solo con sus direcciones IP.
 - DNS nos hace esa traducción transparente - Es como las viejas agendas telefónicas.
 - Se encarga de Resolución de nombres de dominio
 
+![](images/06-Route53/its-not-dns.png)
+
 ## Nombres de Dominio
 Los nombres de dominio tienen 3 niveles: 
 - Analicemos un nombre dominio, de derecha a izquierda:
@@ -143,3 +145,48 @@ Lo podemos consultar utilizando **dig**.
 - Mail Exchange (MX) ¿Quien es el servidor de mail que maneja la cuenta @cloudarchitects.com.ar?
 - Pointer (PTR) Búsquedas inversas, de IP a nombre.
 - IPv6 (AAAA)
+
+
+# Routing policies
+Si queremos distribuirle trafico a esos distintos servidores, tenemos varias formas de hacerlo:
+- Simple
+- Weighted
+- Latency
+- Failover
+- Geolocation
+- Multivalue
+
+### Routing policies: Simple
+- Route53 distribuye el tráfico de forma equitativa a cada uno de ellos, haciendo Round Robin
+
+### Routing policies: Weighted 
+- Permite distribuir el tráfico basado en diferentes pesos asociados.
+
+#### Routing policies: Weighted - Health Checks
+- Si alguno de los Record Set falla el Health Check Route53 lo va a remover y no le va a enviar tráfico hasta que no esté disponible.
+
+### Routing policies: Latency
+- Distribuye el tráfico basado en el servidor que nos responde más rápido.
+- Posiblemente basado en la Region.
+
+### Routing policies: Failover
+- Es para cuando queremos crear una configuración Activo / Pasivo o Primario / Secundario.
+- Utiliza también los Health Checks para saber si el primario está vivo.
+- Cuando el Activo falla, switchea al Pasivo.
+
+### Routing policies: Geolocation
+- Donde va a ser enviado el tráfico basado en la ubicación de donde se origina las queries de DNS.
+- Continentes o Países.
+
+### Routing policies: Multivalue
+- Es igual al simple pero permite poner Health Check en cada Recurso.
+- Si falla algún Recurso (Basado en su Health Check) Route53 lo va a remover.
+
+![](images/06-Route53/trafic-flow.png)
+
+![](images/06-Route53/my-traffic-policy.png)
+
+### Traffic Flow
+- Permite construir flujos de tráfico bastante complejos basados en todas las policies anteriores.
+- Permite que Route53 rutee tráfico a tus recursos basado en las ubicación de tus usuarios y de los mismos recursos.
+- Se puede agregar un peso o bias a cada recurso también.

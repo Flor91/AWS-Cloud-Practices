@@ -82,6 +82,7 @@ Primero tenemos que crear los target groups.
             - Target Groups > **Create Target Group**
 
 2. Seleccionamos hacia donde queremos redirigir el trafico: Instancias, direcciones IP, o funciones Lambda
+
     ![](images/TG.png)
      
      - Creamos primero el TG-mountain-fsilvestre, y luego vamos a crear los grupos para beach y desert.
@@ -91,12 +92,14 @@ Primero tenemos que crear los target groups.
         - Dejamos por default el resto de los parametros del health check.
 
 3. Anadimos las instancias, en este caso el servidor 1A
+
     ![](images/tg-instancias.png)
     
     - Dejamos el puerto por defecto 80
     - Click en `Include as pending below`
     
 4. Creamos los otros dos TG.
+
     ![](images/target-groups.png)
 
 5. Creamos un Load Balancer de tipo Application

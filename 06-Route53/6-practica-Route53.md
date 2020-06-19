@@ -1,245 +1,248 @@
-# Registro nombres de dominio
-### Registremos un dominio en nic.ar
-
-#### Pre-requisitos
-Para poder comprar un nombre de dominio desde este proveedor necesitamos una Clave Fiscal nivel 2 de la AFIP.
-
-[AFIP - Como sacar Clave Fiscal 2](https://www.afip.gob.ar/claveFiscal/informacion-basica/solicitud.asp)
-
-#### [Como registar un Dominio en Nic ar](https://nic.ar/es/ayuda/instructivos/registro-de-dominio)
-
-1. Vamos al sitio de [nic.ar](http://nic.ar)
-    ![](images/nicar.png)
-
-2. Click en Administrar Dominios, 
-3. Nos redireccionan al portal de la AFIP, en el que hay que ingresar con CUIL y Clave Fiscal.
-4. Ingresamos el nombre de dominio que estamos interesados
-    ![](images/buscar-dominio.png)
-5. Si elegimos un nombre ya tomado nos va a aparecer la opcion de disputarlo
-    ![](images/nombre-tomado.png)
-6. Cuando elijamos un nombre disponible nos va a dar la opcion de registrarlo
-    ![](images/dominio-registrar.png)
-7. En el siguiente paso vamos a confirmar nuestros datos personales, 
-8. Y por ultimo vamos a poder pagar el tramite.
-    - El valor hoy (Junio 2020) del tramite del registro de nombre de dominio es de $270 (pesos argentinos).
-
-9. Luego de realizado el pago vamos a poder ver nuestro nuevo dominio en nuestra lista de `Mis Dominios`
-    
-    ![](images/mis-dominios-afip.png)
-    
-10. Damos click en `Delegar` para poder administrar nuestro DN desde Amazon.
-11. Desde esta nueva consola vamos a poder configurar quien queremos que maneje nuestro dominio.
-    - Desde `+ Agregar una nueva delegacion` podemos agregar los hosts que nos va a proveer el servicio desde donde vamos a manejar nuestro dominio.
-     
-    ![](images/agrear-nueva-delegacion.png)
-    
-    - En el caso de Amazon, este nos va a proveer por ejemplo con los siguientes hosts: (Mas abajo vemos como se hace esto)
-    ![](images/delegar-dominio.png)
-    
-### Registremos un dominio en GoDaddy
-
-1. Vamos al sitio de [GoDaddy](ar.godaddy.com)
-    ![](images/go-daddy.png)
-
-2. Vamos al tab de [Dominios](https://ar.godaddy.com/domains/domain-name-search)
-    ![](images/godaddy-dominios.png)
-
-3. Buscamos el nombre que nos interese, y si esta ocupado nos va a ofrecer otras opciones
-    ![](images/godaddy-dn-ocupado.png)
-    
-4. Cuando encontramos un dominio disponible, podemos agregarlo al carrito y comprarlo
-    ![](images/godaddy-available.png)
-    
-    
-### Registremos un dominio en AWS 
-
-1. Vamos al servicio de [Route53 de Amazon](https://console.aws.amazon.com/route53/home?#)
-    ![](images/aws-route53.png)
-    
-2. Buscamos el DN donde dice `Type a domain name` 
-3. Si esta disponible podemos agregarlo al carrito, y tambien nos va a ofrecer otras extensiones
-    ![](images/choose-dn.png)
-
-
-# Delegar nombres de dominio
-
-Una vez que compramos el nombre de dominio podemos delegarlo a Amazon. Si este DN ya lo compramos desde AWS este paso no hace falta.
-1. Vamos a Route53 Hosted Zones.
-    
-    ![](images/hosted-zones.png)
-
-2. `Create Hosted Zones`
-    
-    ![](images/create-host-zone.png)
-    - Ponemos el Domain Name que compramos y le damos a crear.
-
-3. Amazon nos va a crear  dos tipos de registros: NS y SOA
-    - NS: Name Server
-    - SOA: Start of Authority Record
-
-4. Amazon nos va a dar 4 NS, que son los 4 tipos de dominios que manejan ellos. Por ejemplo:
-    - ns-364.awsdns-45.com
-    - ns-957.awsdns-55.net
-    - ns-1315.awsdns-36.org
-    - ns-1573.awsdns-04.co.uk
-
-5. Agregamos los NS en nic.ar o GoDaddy
-    ![](images/delegar-dn-nicar.png)
-
-6. Hay que esperar aproximadamente una hora para poder ver nuestros cambios en los DNS mundiales. 
-    - Quizas en los DNS locales - de Fibertel, Telecentro, Telecom - podamos ver los cambios mucho antes que en los servidores de Amazon de Asia, Europa por ejemplo.
-
-7. Si entramos a nuestro Hosted Zone vemos los registros que Amazon nos creo
-    ![](images/hosted-zone-cdh.png)
-
-## Verificar nuestros DN
-Los siguientes servicios me pueden decir quienes estan manejando los registros (NS, SOA) de mis nombres de dominio desde los distintos servidores del mundo:
-- [What is my DNS](https://www.whatsmydns.net)
-    ![](images/what-is-my-dns.png)
-
-- [DNS Checker](https://dnschecker.org)
-    ![](images/dns-checkers.png)
-
-Con el comando dig puedo pedirle a mi NS (8.8.8.8 Google) los registros SOA, NS, A de mi pagina
-- dig SOA digitalhouse.com +short
-    
-    ![](images/doa-dh.png)
-    
-- dig NS digitalhouse.com +short
-    
-    ![](images/ns-dh.png)
-    
-- dig A www.digitalhouse.com +short
-    
-    ![](images/a-dh.png)
-
-- dig CNAME www.digitalhouse.com +short    
-    ![](images/cname-dh.png)
-
-- Para informacion mas comprensiva [Ping.eu](ping.eu)
-
 # Hands On - Resolucion de nombres
 
 - Creamos 3 instancias en continentes distintos a las cuales les vamos a instalar un Servidor Web con un “Hello World”.
 - Tenemos que tener un Security Group y una key en cada Region.
 - Nos llevamos los DNS públicos e IPs de cada una.
 
-```shell script
-#!/bin/bash
-yum update -y
 
-# instalamos apache y lo inicializamos
-yum install httpd -y
-service httpd start
+1. Vamos a la consola de Amazon EC2, y vamos a crear 3 instancias nuevas de Linux AMI, tipo t2.micro. Cada una en una AZ distinta:
+    - N. Virginia (us-east-1)
+    - London (us-west-2)
+    - Sao Pablo (sa-east-1)
+    
+2. En `User Data` vamos a copiar el siguiente bootstrap script, poniendole la zona en el mensaje de bienvenida:
+    ```shell script
+    #!/bin/bash
+    yum update -y
+    
+    # instalamos apache y lo inicializamos
+    yum install httpd -y
+    service httpd start
+    
+    # lo configuramos para que arranque al inicio
+    chkconfig httpd on
+    
+    # Vamos a la pagina web de nuestro apache
+    cd /var/www/html
+    
+    # Escribo nuestro mensaje en el index.html de nuestro server web
+    echo "<html><h1>Hello Cloud Architects! This is a Web Server in
+    </h1></html>" > index.html
+    ```
+   
+3. Dejamos Storage y Tags por default, y en Security Group seleccionamos o creamos uno apto para web servers:
+    - Tipo HTTP, protocolo TCP, permitimos ingreso al puerto 80 a todo internet (0.0.0.0/0, ::/0)
+    - Para poder administrarlo abrimos SSH/TCP, puerto 22 (0.0.0.0/0)
+    - Para habilitar el PING, All ICMP - IPv4 (Capa 3), para Protocol All, Port N/A, Source 0.0.0.0/0
 
-#lo configuramos para que arranque al inicio
-chkconfig httpd on
+4. Review, Create, y creamos un Key Pair, o seleccionamos alguno que ya tengamos almacenado en nuestras maquinas.
 
-# Vamos a la pagina web de nuestro apache
-cd /var/www/html
+5. Anotamos las IPs publicas de nuestros 2 servers. Esta se encuentra en la descripcion de la instancia como `IPv4 Public IP`
+    34.238.159.95 NV
+    3.10.227.56 Lon
+    18.231.121.112 SP
+     
+     Si vamos a cada IP desde nuestro browser debemos poder acceder a nuestra web:
+     ![](images/6-practica-Route53/web-nv.png)
 
-# Escribo nuestro mensaje en el index.html de nuestro server web
-echo "<html><h1>Hello Cloud Architects! This is a Web Server in
-</h1></html>" > index.html
-```
+6. Apuntamos el server de North Virginia en el naked domain (cloudarchitects.com.ar) con un registro A
+    - Vamos a Route 53, a Hosted Zones, y click en `Create Record Set`
+    - `Name` lo dejamos vacio
+    - `Type` A
+    - `TTL` +1m
+    - `Value` ponemos la IP de north virginia
+    
+7. Apuntamos el server de London en london.cloudarchitects.com.ar
+    - `Create Record Set`:
+    - `Name` = `london`
+    - `Type` A
+    - `TTL` +1m
+    - `Value` ponemos la IP de Londres
+    
+8. Apuntamos el server de Sao Paulo en saopaulo en www.cloudarchitects.com.ar
+    - `Create Record Set`:
+    - `Name` = `www`
+    - `Type` A
+    - `TTL` +1m
+    - `Value` ponemos la IP de San Pablo
+    
+9. Ahora para probarlo hay que tener en cuenta que el browser a veces nos oculta el www.
 
+10. Una forma mas robusta de probaro: (los record set toman un tiempo en propagarse)
+    https://www.whatsmydns.net/#A/www.cloudarchitects.com.ar
 
-- Apuntamos el server de North Virginia en el naked domain con un registro A
-- Apuntamos el server de London en london.cloudarchitects.com.ar
-- Apuntamos el server de Sao Paulo en saopaulo en www.cloudarchitects.com.ar
-- El browser a veces nos oculta el www.
-
-
-- Los record set toman un tiempo en propagarse:
-https://www.whatsmydns.net/#A/www.cloudarchitects.com.ar
-- ¿Y si queremos que www.cloudarchitects.com.ar apunte a cloudarchitects.com.ar?
-
-
+11. ¿Y si queremos que www.cloudarchitects.com.ar apunte a cloudarchitects.com.ar?
+    - Modifico el registro del `www`
+    - `Type` = CNAME
+    - `TTL` +1m
+    - `Value` = cloudarchitects.com.ar
+    
 ## Routing policies
-Si queremos distribuirle trafico a esos tres servidores, tenemos varias formas de hacerlo:
-- Simple
-- Weighted
-- Latency
-- Failover
-- Geolocation
-- Multivalue
+Vamos a distribuir el trafico usando cada una de las politicas de ruteado.
 
+### Routing policy: Simple
+1. Limpiamos los A y CNAME Record sets que creamos en la seccion anterior.
+2. Creamos un Record Set tipo A, TTL +1m, Dominio naked (Name empty)
+3. En value ponemos en lineas separadas por enter las 3 IPs de nuestros servidores.
+4. `Routing Policy` seleccionamos `Simple`
 
-### Routing policies: Simple
-- Route53 distribuye el tráfico de forma equitativa a cada uno de ellos
-    - 54.236.13.51
-    - 35.176.161.146
-    - 18.228.22.87
-- El browser se va a quedar siempre con la misma respuesta.
-- En el "Test Record Set" podemos ver como Route53 los ordena de distinta forma en cada query.
+    ![](images/6-practica-Route53/simple-routing.png)
 
+5. Cuando lo vamos a probar el browser lo va a cachear, y se va a quedar siempre con la misma respuesta.
+
+    ![](images/6-practica-Route53/web-sp.png)
+    
+6. Lo probamos en DNS Checker, y vemos que resuelve a las 3 IPs
+
+    ![](images/6-practica-Route53/dnschecker-simple.png)
+    
+7. Desde Amazon/Route53 podemos ir a "`Test Record Set`"
+
+    ![](images/6-practica-Route53/record.png)
+    
+    - Si lo pido varias veces me va a ir cambiando el orden
 
 ### Routing policies: Weighted 
-- Permite distribuir el tráfico basado en diferentes pesos asociados.
-- Por ejemplo ahora le vamos a distribuir el 80% del tráfico a Sao Paulo, el10% a North Virginia y el 10% restante a London
-- En el "Test Record Set" podemos ver como Route53 nos los devuelve con la distribución de probabilidad que cargamos.
+Permite distribuir el tráfico basado en diferentes pesos asociados. Vamos a distribuir el 80% del tráfico a Sao Paulo, el10% a North Virginia y el 10% restante a London
 
+1. Limpiamos los A y CNAME Record sets que creamos en la seccion anterior.
+2. Creamos un Record Set tipo A, TTL +1m, Dominio naked (Name empty), en value ponemos la IP de nuestro servidor de San Pablo
+3. `Routing Policy` seleccionamos `Weighted`
+    - `Weight` = 80
+    - `Set ID` = San Paulo
 
-#### Routing policies: Weighted - Health Checks
-- Agreguemos un Health Check a SaoPaulo 18.228.22.87 cloudarchitects.com.ar / index.html
-- Agreguemos un Health Check a North Virginia 54.236.13.51 cloudarchitects.com.ar / index.html
-- Agreguemos un Health Check a London 35.176.161.146 cloudarchitects.com.ar / index.html
+4. Creamos un Record Set tipo A, TTL +1m, Dominio naked (Name empty), en value ponemos la IP de nuestro servidor de Londres
+5. `Routing Policy` seleccionamos `Weighted`
+    - `Weight` = 10
+    - `Set ID` = London
 
-- Se los asignamos a cada registro.
-- Si alguno de los Record Set falla el Health Check Route53 lo va a remover y no le va a enviar tráfico hasta que no esté disponible.
-- Apagamos la instancia de Sao Paulo.
-- El Health Check debería empezar a fallar (Paciencia).
-- En el "Test Record Set" podemos ver como Route53 dejó de mandarle tráfico.
+6. Creamos un Record Set tipo A, TTL +1m, Dominio naked (Name empty), en value ponemos la IP de nuestro servidor de North Virginia
+7. `Routing Policy` seleccionamos `Weighted`
+    - `Weight` = 10
+    - `Set ID` = N. Virginia
+    
+    ![](images/6-practica-Route53/weighted-policy.png)
 
-- Volvemos a prender la instancia ¿Que pasó?
-- Allocar una IP Elastica y asignarla la instancia.
-- Colocar la nueva IP en el Health Check y en el Record Set.
-- Volvemos a testear la Routing Policy (Paciencia).
+8. Lo testeamos con `Test Record Set` y `DNSChecker, y vemos que la mayoria del tiempo (80%) deberia contestarnos con San Pablo
+    ![](images/6-practica-Route53/weighted-check.png)
+    
+    
+Vamos a agregar Health Checks:
+1. Vamos a Route53 / Health Checks, y creamos 3 veces `Create health check`
+2. Completamos para cada una de nuestras zonas:
+    - Name = <Nombre de nuestra zona>
+    - Specify endpoint by = IP address
+    - Protocol HTTP
+    - IP = <IP de nuesro server>
+    - Puerto 80
+    - Path /index.html
+
+    ![](images/6-practica-Route53/health-check.png)
+    
+    En opciones avanzadas puedo configurar los tiempos de health check, reintentos, etc.
+  
+    ![](images/6-practica-Route53/health-checks-all.png)
+  
+3. Volvemos a Hosted zones, y en los registros de cada zona asignamos el health check correspondiente con la opcion 'Associate with Health Check'
+    
+    ![](images/6-practica-Route53/associate-HC.png)
+    
+    Si alguno de los Record Set falla el Health Check Route53 lo va a remover y no le va a enviar tráfico hasta que no esté disponible.
+
+4. Apagamos la instancia de Sao Paulo.
+    - El Health Check debería empezar a fallar (Paciencia).
+
+5. En el "Test Record Set" vemos como Route53 dejó de mandarle tráfico, y en DNSChecker deja de aparecer la ip de SP.
+    
+    ![](images/6-practica-Route53/unhealthy-sp.png)
+
+6. Volvemos a prender la instancia, y vemos que el Health check no vuelve a Healthy nunca porque la IP cambio (para que no cambie hay que pagarla).
+
+7. Si vamos a querer apagar y prender maquinas, hay que allocar una IP Elastica y asignarla la instancia.
+    - Vamos a EC2 / Network & Security / Elastic IP
+    - `Allocate Elastic IP address`
+    - Seleccionando la ip creada, seleccionamos 'Associate Elastic IP'
+    - Seleccionamos la instancia a la que queremos asociarle la IP
+    
+    ![](images/6-practica-Route53/assoc-elastic-ip.png)
+
+8. Colocar la nueva IP en el Health Check y en el Record Set.
+9. Volvemos a testear la Routing Policy (Paciencia).
 
 
 ### Routing policies: Latency
-- Distribuye el tráfico basado en el servidor que nos responde más rápido.
-- Posiblemente basado en la Region.
-- Limpiemos los anteriores.
-- Desde nuestro Browser seguramente Sao Paulo es el que nos responde.
-- Desde https://www.whatsmydns.net/#A/cloudarchitects.com.ar podemos ver como se resuelve diferente según la latencia.
+Distribuye el tráfico basado en el servidor que nos responde más rápido. _Posiblemente_ basado en la Region.
+
+1. Limpiemos los anteriores.
+2. Creamos 3 nuevos Record Sets, uno por zona.
+    - Ponemos la IP del servidor de la zona
+    - `Routing policy` = Latency
+    - `Region` seleccionamos la region de la zona
+    - `Set ID` ponemos el nombre de la zona para identificarlos mas facilmente
+    - Agregamos los Health Check que creamos previamente
+    
+3. Desde nuestro Browser seguramente Sao Paulo es el que nos responde.
+4. Desde [DNS Checker](https://www.whatsmydns.net/#A/cloudarchitects.com.ar) podemos ver como se resuelve diferente según la latencia.
+    
+    ![](images/6-practica-Route53/dns-latency.png)
+    ![](images/6-practica-Route53/check-latency-.png)
 
 ### Routing policies: Failover
-- Es para cuando queremos crear una configuración Activo / Pasivo o Primario / Secundario.
-- Utiliza también los Health Checks para saber si el primario está vivo.
-- Cuando el Activo falla, switchea al Pasivo.
-- Limpiemos los anteriores.
-- Agregamos a Sao Paulo como Primario y a North Virginia como Secundario.
+Es para cuando queremos crear una configuración Activo / Pasivo o Primario / Secundario.
 
-- Paramos la instancia de Sao Paulo.
-- Desde https://www.whatsmydns.net/#A/cloudarchitects.com.ar podemos ver como cambia la resolución.
-- Volvemos a prender la instancia de Sao Paulo.
-- Deberíamos volver al estado inicial.
+Como? Utiliza también los Health Checks para saber si el primario está vivo.
+    - Cuando el Activo falla, switchea al Pasivo.
 
+1. Limpiemos los anteriores.
+2. Creamos dos Record Sets con `Routing Policy` `Failover`, uno con `Failover Record Type` `Primary`, y el otro `Secondary`
+    - Agregamos a Sao Paulo como Primario y a North Virginia como Secundario.
+
+3. Paramos la instancia de Sao Paulo.
+4. Desde https://www.whatsmydns.net/#A/cloudarchitects.com.ar podemos ver como cambia la resolución.
+5. Volvemos a prender la instancia de Sao Paulo.
+6. Verificamos que volvemos al estado inicial.
 
 ### Routing policies: Geolocation
-- Donde va a ser enviado el tráfico basado en la ubicación de donde se origina las queries de DNS.
-- Continentes o Países.
-- American clients to North Virginia
-- European clients to London
-- Others to Sao Paulo
-- Desde https://www.whatsmydns.net/#A/cloudarchitects.com.ar podemos ver como se resuelve diferente según el continente.
+Donde va a ser enviado el tráfico basado en la ubicación de donde se origina las queries de DNS. Por Continentes o Países.
 
+1. Limpiamos lo anterior
+2. Creamos 3 Records con `Routing Policy` `Geolocation`
+    - En Location elegimos cada uno de los continentes, y ponemos en valor la IP del servidor apropiado.
+3. Configurar para que los clientes de cada continente le peguen al servidor de su continente:
+    - American clients to North Virginia
+    - European clients to London
+    - Others to Sao Paulo
+    
+    ![](images/6-practica-Route53/geolocated.png)
+
+4. Desde https://www.whatsmydns.net/#A/cloudarchitects.com.ar podemos ver como se resuelve diferente según el continente.
 
 ### Routing policies: Multivalue
-- Es igual al simple pero permite poner Health Check en cada Recurso.
-- Si falla algún Recurso (Basado en su Health Check) Route53 lo va a remover.
-- Podemos verlo en el "Test Record Set".
-- Paremos Sao Paulo.
-- Vemos en "Test Record Set" como solo van a quedar dos registros.
+Es igual al simple pero permite poner Health Check en cada Recurso. Si falla algún Recurso (Basado en su Health Check) Route53 lo va a remover.
 
-
-### Traffic Flow
-- Permite construir flujos de tráfico bastante complejos basados en todas las policies anteriores.
-- Permite que Route53 rutee tráfico a tus recursos basado en las ubicación de tus usuarios y de los mismos recursos.
-- Se puede agregar un peso o bias a cada recurso también.
-
+1. Limpiamos lo anterior
+2. Creamos 3 Record sets de tipo Multivalue
+3. Les agregamos los health checks e ips de cada zona
+4. Podemos verlo en el "Test Record Set".
+5. Paremos Sao Paulo.
+6. Vemos en "Test Record Set" como solo van a quedar dos registros.
 
 ### Propuesta Práctica
 - Los sitios que deployaron la semana pasada en S3, apuntarles un subdominio dentro de *.cloudarchitects.com.ar.
-- Los sitios que deployaron el martes con Dario con ELB, apuntarles un subdominio dentro de *.cloudarchitects.com.ar. (Es necesario crear nuevamente los ALB)
+
+1. Creamos un nuevo bucket de S3 con nombre `fsilvestre.cloudarchitects.com.ar`
+2. Copiamos el contenido de nuestro sitio en el nuevo bucket
+3. Configuramos el bucket para que sirva como Sitio Web estatico
+4. Configuramos el bucket para que sea accedible publicamente
+5. Agregamos el policy para hacer el bucket efectivamente publico
+
+6. Creamos un nuevo Record desde Route 53
+    - Name: `fsilvestre`
+    - Type: `CNAME`
+    - Value: `fsilvestre.cloudarchitects.com.ar.s3-website-us-east-1.amazonaws.com`
+    - Routing Policy: `Simple`
+
+    ![](images/6-practica-Route53/resolucion.png)
+
+- Los sitios que deployaron el martes con ELB, apuntarles un subdominio dentro de *.cloudarchitects.com.ar. (Es necesario crear nuevamente los ALB)
+    ![](images/6-practica-Route53/elb-dns.png)
