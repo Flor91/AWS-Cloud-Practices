@@ -20,7 +20,7 @@ Habilidades que se evalúan con la certificación
 3. [EC2: Elastic Compute Cloud 🖥️](03-EC2/03-EC2.md)
     - Práctica: [EC2 On-Hands Lab](03-EC2/3-practica-EC2.pdf)
 
-4. [S3: Simple Storage Service 🗄️](04-S3/04-S3.md)
+4. [S3: Simple Storage Service 🧳️](04-S3/04-S3.md)
     - Práctica: [Montar un sitio web estatico desde S3](04-S3/4-practica-S3.md)
     
 5. [ELB: Elastic Load Balancing, ASG: Auto Scaling Groups ⚖️](05-ELB/05-ELB-ASG.md)
@@ -31,4 +31,5 @@ Habilidades que se evalúan con la certificación
 
 7. [Docker 🐳](07-Docker/07-Docker.md)
     - Práctica: [Docker](07-Docker/7-practica-docker.md)
-    
+
+8. [ECS: Elastic Container Service 🗄](08-ECS/08-ECS.md)
