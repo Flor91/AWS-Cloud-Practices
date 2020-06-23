@@ -1,0 +1,35 @@
+{
+  "containerDefinitions": [
+    {
+      "name": "fsilvestre-flask-redis",
+      "image": "622305974757.dkr.ecr.us-east-1.amazonaws.com/fsilvestre/flask-redis",
+      "portMappings": [
+        {
+          "containerPort": 5000,
+          "hostPort": 80
+        }
+      ],
+      "environment" : [
+        { "name" : "ENVIRONMENT", "value" : "production" }
+      ],      
+      "memory": 50,
+      "cpu": 102,
+      "links": [
+        "redis"
+      ]      
+    },
+    {
+      "name": "redis",
+      "image": "redis:alpine",
+      "portMappings": [
+        {
+          "containerPort": 6379,
+          "hostPort": 6379
+        }
+      ],    
+      "memory": 150,
+      "cpu": 102
+    }
+  ],
+  "family": "web"
+}
