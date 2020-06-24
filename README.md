@@ -57,6 +57,8 @@ Habilidades que se evalúan con la certificación
     - [Hands-on Docker Storage y Docker Compose](08-ECS/Storage%20&%20Compose.ipynb)
     - [Practica ECS](08-ECS/ECS.ipynb)
 
+9. [Network 🕸](09-Networking)
+
     ### Modulo 3
 9. Kubernetes
 10. RDS: Bases de datos relacionales
