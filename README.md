@@ -58,6 +58,7 @@ Habilidades que se evalúan con la certificación
     - [Practica ECS](08-ECS/ECS.ipynb)
 
 9. [Network 🕸](09-Networking)
+    - [Practica VPC](09-Networking/9-practica-networking.md)
 
     ### Modulo 3
 9. Kubernetes
