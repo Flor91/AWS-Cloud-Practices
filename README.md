@@ -59,8 +59,14 @@ Habilidades que se evalúan con la certificación
 
 9. [Network 🕸](09-Networking)
     - [Practica VPC](09-Networking/9-practica-networking.md)
+    
+10. [Docker + ECS 🐋](10-Docker-ECS/Repaso-ECS-Docker.md)
+    - [Deploy Flask + Redis App](10-Docker-ECS/10-practica-docker.md)
 
     ### Modulo 3
+11. [Continuos Integration / Continuos Delivery](11-CI-CD/11-CI-CD.md)
+    - [Practica Devops](11-CI-CD/11-practica-devops.md)
+    
 9. Kubernetes
 10. RDS: Bases de datos relacionales
 11. DynamoDB
