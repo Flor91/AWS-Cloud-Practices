@@ -1,7 +1,5 @@
 #!/usr/bin/env python3
-from flask import Flask
-from flask import render_template
-from flask import send_from_directory
+from flask import Flask, render_template, send_from_directory
 
 app = Flask(__name__, static_url_path="", template_folder="")
 
