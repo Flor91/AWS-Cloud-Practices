@@ -9,8 +9,7 @@ app = Flask(__name__)
 @app.route("/")
 def hello():
     return jsonify(
-        message=f"Hello! I am a container in {os.environ.get('ENVIRONMENT')}"
-    )
+        message=f"Hello! I am a container in {os.environ.get('ENVIRONMENT')}")
 
 
 if __name__ == "__main__":
