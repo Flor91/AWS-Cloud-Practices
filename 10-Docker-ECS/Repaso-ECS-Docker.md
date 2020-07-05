@@ -124,8 +124,7 @@ Si ahora quiero actualizar el codigo de mi container,
 
 - una forma de hacerlo es actualizar el codigo de mi app, actualizar la imagen
   de DockerHub, y luego reiniciar mi ECS cluster.
-  `docker build -t fsilvestre/flask`
-  `docker push fsilvestre/flask`
+  `docker build -t fsilvestre/flask` `docker push fsilvestre/flask`
 
 Para enviar setear varias de entorno en mis clusters de ECS, hay 3 formas:
 
