@@ -1,30 +1,34 @@
 # Repaso ECS
 
-Vemos todos nuestros Clusters en ECS:
-![](images/repaso/ecs.png)
+Vemos todos nuestros Clusters en ECS: ![](images/repaso/ecs.png)
 
 ![](images/repaso/cluster-ecs.png)
 
 Cluster: Unidad computacional
 
 Que veo en esta consola:
+
 - Servicio asignado web (web-service)
 - No hay instancias de containers registrados
 - No hay pending tasks
 - No hay servicios activos, el servicio asociado esta inactivo
-- Vemos que tenemos Desired tasks = 1, pero como no tengo maquinas asignadas al cluster no la puedo levantar.
+- Vemos que tenemos Desired tasks = 1, pero como no tengo maquinas asignadas al
+  cluster no la puedo levantar.
 
-Para ver los recursos que tengo asignados al cluster puedo verlos en la tab de ECS Instances:
+Para ver los recursos que tengo asignados al cluster puedo verlos en la tab de
+ECS Instances:
 
 ![](images/repaso/ecs-inst.png)
 
-Si vamos al servicio web-service:34, vemos la definicion de la tarea: Que hace exactamente nuestro servicio.
+Si vamos al servicio web-service:34, vemos la definicion de la tarea: Que hace
+exactamente nuestro servicio.
 
 ![](images/repaso/web-service-34.png)
 
 Vemos que es simplemente un nginx.
 
-Con la Task Definition puedo crear servicios o tareas. 
+Con la Task Definition puedo crear servicios o tareas.
+
 - Los servicios son daemons que nunca van a terminar (como un nginx).
 - Las tareas son procesamientos en batch que arrancan a demanda y terminan.
 
@@ -32,22 +36,23 @@ Vamos a borrar los clusters que teniamos creados, y crear uno nuevo.
 
 1. Create cluster
 
-    ![](images/repaso/create-cluster-1.png)
+   ![](images/repaso/create-cluster-1.png)
 
-    - Seleccionamos el template de cluster `EC2 Linux + Networking`
+   - Seleccionamos el template de cluster `EC2 Linux + Networking`
 
 2. Configure cluster
 
-    ![](images/repaso/create-cluster-config.png)
-    
-    - Nombramos
-    - Elegimos los tipos de instancias. **Estas instancias tienen que tener instalado el Container Agent**
-        - Cantidad de instancias
-        - AMIs
-        - Volumenes
-        - Key Pair
-    - Podriamos seleccionar la opcion para elegir el cluster vacio
-    - Se puede seleccionar la opcion para monitorear desde CloudWatch
+   ![](images/repaso/create-cluster-config.png)
+
+   - Nombramos
+   - Elegimos los tipos de instancias. **Estas instancias tienen que tener
+     instalado el Container Agent**
+     - Cantidad de instancias
+     - AMIs
+     - Volumenes
+     - Key Pair
+   - Podriamos seleccionar la opcion para elegir el cluster vacio
+   - Se puede seleccionar la opcion para monitorear desde CloudWatch
 
 Esto seria lo mismo que con CLI correr:
 
@@ -58,15 +63,17 @@ Para ver los detalles del cluster:
 `aws ecs describe-cluster --cluster-name flask-app`
 
 Necesitamos que nuestras instancias de EC2 tengan la variable de entorno:
-    `CLUSTER_AGENT=flask-app`
+`CLUSTER_AGENT=flask-app`
 
-Para hacerlo con CLI habiamos creado un Bucket S3, y subido nuestro archivo `ecs.config` con esta variable.
+Para hacerlo con CLI habiamos creado un Bucket S3, y subido nuestro archivo
+`ecs.config` con esta variable.
 
 `aws s3 mb s3://flask-app --region us-east-1`
 
 `aws s3 cp ecs.config s3://flask-app`
 
-Luego con el siguiente comando creamos una instancia de EC2 y le especificamos que el user-data script lo tome del archivo de S3 que acabamos de subir:
+Luego con el siguiente comando creamos una instancia de EC2 y le especificamos
+que el user-data script lo tome del archivo de S3 que acabamos de subir:
 
 ```shell script
 aws ec2 run-instances \
@@ -81,10 +88,10 @@ aws ec2 run-instances \
 --tag-specifications 'ResourceType=instance,Tags=[{Key=Course,Value=cloud_architect}, {Key=Name,Value=fsilvestre-flask-app}]' 'ResourceType=volume,Tags=[{Key=Course,Value=cloud_architect}]'
 ```
 
-Vamos a crear un cluster de ECS que corra una app de Docker nuestra. Vamos a deployar el container con flask corriendo.
+Vamos a crear un cluster de ECS que corra una app de Docker nuestra. Vamos a
+deployar el container con flask corriendo.
 
-Dockerfile: ./Dockerfile
-Flask-app: ./app.py
+Dockerfile: ./Dockerfile Flask-app: ./app.py
 
 Vamos a probarlo local primero, y testearlo con un curl:
 
@@ -92,9 +99,10 @@ Vamos a probarlo local primero, y testearlo con un curl:
 docker run -d --rm --name flask -p 80:5000 fsilvestre/flask
 ```
 
-Vamos a crear un task definition para tener como servicio este contenedor.
-En el atributo de image le vamos a pasar el nombre de nuestra imagen de Docker que debe estar publicada en DockerHub. 
-ECS va a buscar la imagen ahi cuando no la encuentre.
+Vamos a crear un task definition para tener como servicio este contenedor. En el
+atributo de image le vamos a pasar el nombre de nuestra imagen de Docker que
+debe estar publicada en DockerHub. ECS va a buscar la imagen ahi cuando no la
+encuentre.
 
 Vamos a registrar esta task definition:
 
@@ -102,24 +110,27 @@ Vamos a registrar esta task definition:
 aws ecs register-task-definition --cli-input-json file://flask-app-task-definition.json
 ```
 
-Para que el cluster de ECS se actualice la task definition que acabamos de subir, hay que reiniciar.
+Para que el cluster de ECS se actualice la task definition que acabamos de
+subir, hay que reiniciar.
 
 ```shell script
 aws ecs update-service --cluster flask-app --service-name web-service --task-definition web --desired-count 0
 ```
 
-Y luego puedo volver a poner el desired count en 3 (o el numero que quiera), y estos nuevos los crea con la ultima version de la task.
+Y luego puedo volver a poner el desired count en 3 (o el numero que quiera), y
+estos nuevos los crea con la ultima version de la task.
 
+Si ahora quiero actualizar el codigo de mi container,
 
-Si ahora quiero actualizar el codigo de mi container, 
-- una forma de hacerlo es actualizar el codigo de mi app, actualizar la imagen de DockerHub, y luego reiniciar mi ECS cluster.
-    
-    `docker build -t fsilvestre/flask`
-    
-    `docker push fsilvestre/flask`
-    
+- una forma de hacerlo es actualizar el codigo de mi app, actualizar la imagen
+  de DockerHub, y luego reiniciar mi ECS cluster.
+  `docker build -t fsilvestre/flask`
+  `docker push fsilvestre/flask`
+
 Para enviar setear varias de entorno en mis clusters de ECS, hay 3 formas:
-- (La menos recomendada, pero mas rapida:) Pasar variable como secretos en el Task Definition
+
+- (La menos recomendada, pero mas rapida:) Pasar variable como secretos en el
+  Task Definition
 - Parameter store
 
 Para agregar la variable de entorno se agrega al json la key `environment`:
@@ -136,9 +147,7 @@ Para agregar la variable de entorno se agrega al json la key `environment`:
           "hostPort": 80
         }
       ],
-      "environment": [
-        { "name": "ENVIRONMENT", "value": "production"}
-      ],
+      "environment": [{ "name": "ENVIRONMENT", "value": "production" }],
       "memory": 50,
       "cpu": 102
     }
@@ -154,12 +163,12 @@ En el caso de hacerlo con `Docker-compose.yml`, nos quedaria:
 ```yaml
 version: 3
 services:
-    web:
-      build: .
-      ports:
-        - "80:5000"
-    redis:
-      image: "redis:alpine"
+  web:
+    build: .
+    ports:
+      - "80:5000"
+  redis:
+    image: "redis:alpine"
 ```
 
 La task-definition de ese Docker compose seria:
@@ -176,14 +185,10 @@ La task-definition de ese Docker compose seria:
           "hostPort": 80
         }
       ],
-      "environment": [
-        { "name": "ENVIRONMENT", "value": "production"}
-      ],
+      "environment": [{ "name": "ENVIRONMENT", "value": "production" }],
       "memory": 50,
       "cpu": 102,
-      "links": [
-        "redis"
-      ] 
+      "links": ["redis"]
     },
     {
       "name": "redis",
@@ -196,21 +201,24 @@ La task-definition de ese Docker compose seria:
       ],
       "memory": 150,
       "cpu": 102
-    } 
+    }
   ],
   "family": "web"
 }
 ```
 
-Cuando registro las tasks definition y actualizo mi cluster, el scheduler va a levantar el redis + flask juntos en la misma maquina.
+Cuando registro las tasks definition y actualizo mi cluster, el scheduler va a
+levantar el redis + flask juntos en la misma maquina.
 
 **ECR**: Elastic Container Registry - Registro de Docker privado.
+
 - Se puede acceder desde ECS / ECR / Registry
 - Tenemos un Docker Registry por cada AZ, y account id.
 
-Para poder configurar nuestro Docker CLI local para que se comunique con el Docker Registry de AWS. 
+Para poder configurar nuestro Docker CLI local para que se comunique con el
+Docker Registry de AWS.
 
-Pedimos la contrasena para logearnos con el comando: 
+Pedimos la contrasena para logearnos con el comando:
 
 `aws ecr get-login-password`
 
@@ -224,12 +232,10 @@ Para crear un repo:
 aws ecr create-registry --repository-name fsilvestre/flask-redis
 ```
 
-Y para pushear: 
+Y para pushear:
 
 ```shell script
 docker tag flask-redis <ECR>/fsilvestre/flask-redis
 
 docker push flask-redis <ECR>/fsilvestre/flask-redis
 ```
-
-
