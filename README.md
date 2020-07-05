@@ -90,19 +90,20 @@ Habilidades que se evalúan con la certificación
     - [Deploy Flask + Redis App](10-Docker-ECS/10-practica-docker.md)
 
     ### Modulo 3
-
-11. [Continuos Integration / Continuos Delivery](11-CI-CD/11-CI-CD.md)
-
+11. [Continuos Integration / Continuos Delivery 🚢](11-CI-CD/11-CI-CD.md)
     - [Practica Devops](11-CI-CD/11-practica-devops.md)
+    
+12. [Arquitectura de Microservicios, API Gateway, Lambda 🦠](12-Microservicios/12-microservicios.md)
+    - [API REST utilizando los servicios API Gateway y Lambda](12-Microservicios/12-practica-microservicios.md) 
 
-12. Kubernetes
-13. RDS: Bases de datos relacionales
-14. DynamoDB
-15. Datalake
-16. Glue Catalog, Crawler, Athena
-17. EMR
-18. ETL en AWS. Glue Jobs. DynamicFrames
-19. Arquitecturas RT, Kinesis
+9. Kubernetes
+10. RDS: Bases de datos relacionales
+11. DynamoDB
+12. Datalake
+13. Glue Catalog, Crawler, Athena
+14. EMR
+15. ETL en AWS. Glue Jobs. DynamicFrames
+16. Arquitecturas RT, Kinesis 
 
     ### Modulo 4
 
