@@ -90,29 +90,32 @@ Habilidades que se evalúan con la certificación
     - [Deploy Flask + Redis App](10-Docker-ECS/10-practica-docker.md)
 
     ### Modulo 3
-11. [Continuos Integration / Continuos Delivery 🚢](11-CI-CD/11-CI-CD.md)
-    - [Practica Devops](11-CI-CD/11-practica-devops.md)
-    
-12. [Arquitectura de Microservicios, API Gateway, Lambda 🦠](12-Microservicios/12-microservicios.md)
-    - [API REST utilizando los servicios API Gateway y Lambda](12-Microservicios/12-practica-microservicios.md) 
 
-9. Kubernetes
-10. RDS: Bases de datos relacionales
-11. DynamoDB
-12. Datalake
-13. Glue Catalog, Crawler, Athena
-14. EMR
-15. ETL en AWS. Glue Jobs. DynamicFrames
-16. Arquitecturas RT, Kinesis 
+11. [Continuos Integration / Continuos Delivery 🚢](11-CI-CD/11-CI-CD.md)
+
+    - [Practica Devops](11-CI-CD/11-practica-devops.md)
+
+12. [Arquitectura de Microservicios, API Gateway, Lambda 🦠](12-Microservicios/12-microservicios.md)
+
+    - [API REST utilizando los servicios API Gateway y Lambda](12-Microservicios/12-practica-microservicios.md)
+
+13. Kubernetes
+14. RDS: Bases de datos relacionales
+15. DynamoDB
+16. Datalake
+17. Glue Catalog, Crawler, Athena
+18. EMR
+19. ETL en AWS. Glue Jobs. DynamicFrames
+20. Arquitecturas RT, Kinesis
 
     ### Modulo 4
 
-20. Arquitectura de microservicios. API Gateway, CORS, Lambda
-21. Arquitectura dirigida a eventos. S3, Lambda, SQS
-22. Devops y Desarrollo. CloudFormation y CloudPipeline
+21. Arquitectura de microservicios. API Gateway, CORS, Lambda
+22. Arquitectura dirigida a eventos. S3, Lambda, SQS
+23. Devops y Desarrollo. CloudFormation y CloudPipeline
 
     ### Modulo 5
 
-23. Desarrollo y puesta en produccion de modelos de Machine Learning con
+24. Desarrollo y puesta en produccion de modelos de Machine Learning con
     SageMaker
-24. Servicios de IA. Lex (Chatbot) y Rekognition (procesamiento de imagenes)
+25. Servicios de IA. Lex (Chatbot) y Rekognition (procesamiento de imagenes)
