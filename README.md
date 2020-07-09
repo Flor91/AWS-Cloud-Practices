@@ -90,12 +90,15 @@ Habilidades que se evalúan con la certificación
     - [Deploy Flask + Redis App](10-Docker-ECS/10-practica-docker.md)
 
     ### Modulo 3
-11. [Continuos Integration / Continuos Delivery 🚢](11-CI-CD/11-CI-CD.md)
+11. [Automatizacion - Continuos Integration / Continuos Delivery 🚢](11-CI-CD/11-CI-CD.md)
     - [Practica Devops](11-CI-CD/11-practica-devops.md)
     
 12. [Arquitectura de Microservicios, API Gateway, Lambda 🦠](12-Microservicios/12-microservicios.md)
     - [API REST utilizando los servicios API Gateway y Lambda](12-Microservicios/12-practica-microservicios.md) 
 
+13. [Arquitectura orientada a eventos](13-Eventos/13-arquitectura-eventos.md)
+    - [Pipeline de procesamiento de eventos](13-Eventos/13-practica-eventos.md)
+    
 9. Kubernetes
 10. RDS: Bases de datos relacionales
 11. DynamoDB
