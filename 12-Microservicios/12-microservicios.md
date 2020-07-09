@@ -1,7 +1,5 @@
 # Arquitectura de microservicios
 
-**El monolito**
-
 ### Arquitectura Monolítica
 - Alto acoplamiento de procesos.
 - Si hay mucha demanda de un proceso se debe escalar toda la arquitectura.

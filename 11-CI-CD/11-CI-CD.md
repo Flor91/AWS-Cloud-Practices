@@ -81,6 +81,8 @@ Mientras mas automatizadas esten estos chequeos en tu pipeline, te da mas tranqu
 
 ![](images/11-CI-CD/herramientas-aws.png)
 
+**CodePipeline**: Orquestra cada etapa de nuestro desarrollo y deployment.
+
 ![](images/11-CI-CD/tools-aws.png)
 
 ![](images/11-CI-CD/devops-stack.png)
@@ -88,6 +90,16 @@ Mientras mas automatizadas esten estos chequeos en tu pipeline, te da mas tranqu
 ### Tipos de deploy
 
 ![](images/11-CI-CD/tipos-deploy.png)
+
+**Deploy in place**: Bajamos todas las instancias que tenemos corriendo, deployamos nuestro nuevo codigo y actualizaciones, y volvemos a levantar. Gran desventaja el downtime, y el riesgo de no poder volver a levantar las instancias.
+
+**Rolling**: Vamos bajando las instancias de a una, vamos implementando las instancias de a una, y las vamos volviendo a levantar. Vamos a tener fuera de servicio solo una instancia por vez, solo que mientras hay usuarios que van a pegarle a isntancias desactualizadas.
+
+**Rolling con batch adicionales**: Anadis una instancia nueva de manera temporal, y haces lo mismo que el deploy anterior. Cuando terminas volves a desvincular la que agregaste. De esta forma mantenes tu capacidad.
+
+**Immutable**: Haces tu implemetacion todo en instancias nuevas. Una vez que esta probado y funciona, bajas las instancias que tenes en produccion y pones estas.
+
+**Blue/Green**: Tenemos dos infraestructuras trabajando en paralelo. Una productiva, y la otra en standby. Aplicamos nuestros cambios a la infra que no esta productiva, y si funciona todo hacemos switch a ella. No borramos la anterior hasta no estar seguros que todo esta funcionando bien.
 
 ### Blue/green deployment
 
