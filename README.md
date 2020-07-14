@@ -100,6 +100,10 @@ Habilidades que se evalúan con la certificación
     - [Pipeline de procesamiento de eventos](13-Eventos/13-practica-eventos.md)
     
 14. [RDS: Bases de datos relacionales](14-RDS/14-RDS.md)
+    - [Crear BD RDS Mysql y conectarse desde EC2](14-RDS/14-practica-RDS.md)
+
+15. [Big Data y Analytics](15-BigData-Analytics/15-big-data.md)
+    - [Redshift]
 
 10. Kubernetes
 11. DynamoDB
@@ -108,15 +112,6 @@ Habilidades que se evalúan con la certificación
 14. EMR
 15. ETL en AWS. Glue Jobs. DynamicFrames
 16. Arquitecturas RT, Kinesis 
-
-    ### Modulo 4
-
-20. Arquitectura de microservicios. API Gateway, CORS, Lambda
-21. Arquitectura dirigida a eventos. S3, Lambda, SQS
-22. Devops y Desarrollo. CloudFormation y CloudPipeline
-
-    ### Modulo 5
-
 23. Desarrollo y puesta en produccion de modelos de Machine Learning con
     SageMaker
 24. Servicios de IA. Lex (Chatbot) y Rekognition (procesamiento de imagenes)
