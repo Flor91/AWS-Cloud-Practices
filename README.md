@@ -90,33 +90,37 @@ Habilidades que se evalúan con la certificación
     - [Deploy Flask + Redis App](10-Docker-ECS/10-practica-docker.md)
 
     ### Modulo 3
+
 11. [Automatizacion - Continuos Integration / Continuos Delivery 🚢](11-CI-CD/11-CI-CD.md)
+
     - [Practica Devops](11-CI-CD/11-practica-devops.md)
-    
+
 12. [Arquitectura de Microservicios, API Gateway, Lambda 🦠](12-Microservicios/12-microservicios.md)
-    - [API REST utilizando los servicios API Gateway y Lambda](12-Microservicios/12-practica-microservicios.md) 
+
+    - [API REST utilizando los servicios API Gateway y Lambda](12-Microservicios/12-practica-microservicios.md)
 
 13. [Arquitectura orientada a eventos](13-Eventos/13-arquitectura-eventos.md)
+
     - [Pipeline de procesamiento de eventos](13-Eventos/13-practica-eventos.md)
-    
+
 14. [RDS: Bases de datos relacionales](14-RDS/14-RDS.md)
 
-10. Kubernetes
-11. DynamoDB
-12. Datalake
-13. Glue Catalog, Crawler, Athena
-14. EMR
-15. ETL en AWS. Glue Jobs. DynamicFrames
-16. Arquitecturas RT, Kinesis 
+15. Kubernetes
+16. DynamoDB
+17. Datalake
+18. Glue Catalog, Crawler, Athena
+19. EMR
+20. ETL en AWS. Glue Jobs. DynamicFrames
+21. Arquitecturas RT, Kinesis
 
     ### Modulo 4
 
-20. Arquitectura de microservicios. API Gateway, CORS, Lambda
-21. Arquitectura dirigida a eventos. S3, Lambda, SQS
-22. Devops y Desarrollo. CloudFormation y CloudPipeline
+22. Arquitectura de microservicios. API Gateway, CORS, Lambda
+23. Arquitectura dirigida a eventos. S3, Lambda, SQS
+24. Devops y Desarrollo. CloudFormation y CloudPipeline
 
     ### Modulo 5
 
-23. Desarrollo y puesta en produccion de modelos de Machine Learning con
+25. Desarrollo y puesta en produccion de modelos de Machine Learning con
     SageMaker
-24. Servicios de IA. Lex (Chatbot) y Rekognition (procesamiento de imagenes)
+26. Servicios de IA. Lex (Chatbot) y Rekognition (procesamiento de imagenes)
