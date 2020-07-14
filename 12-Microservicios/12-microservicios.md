@@ -25,9 +25,9 @@ Se puede pensar en los microservicios como:
 
 ## Estructura de un microservicio
 A grandes rasgos un microservicio tiene:
-- Un storage de datos que puede o no compartirse con otros microservicios.
+- Un storage de datos que puede o no compartirse con otros microservicios
 - Implementación de lógica en código.
-- Una API para exponer su funcionalidades.
+- Una API para exponer su funcionalidades
 
 ![](images/12-microservicios/estructura-micros.png)
 
