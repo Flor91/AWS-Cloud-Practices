@@ -99,8 +99,9 @@ Habilidades que se evalúan con la certificación
 13. [Arquitectura orientada a eventos](13-Eventos/13-arquitectura-eventos.md)
     - [Pipeline de procesamiento de eventos](13-Eventos/13-practica-eventos.md)
     
-9. Kubernetes
-10. RDS: Bases de datos relacionales
+14. [RDS: Bases de datos relacionales](14-RDS/14-RDS.md)
+
+10. Kubernetes
 11. DynamoDB
 12. Datalake
 13. Glue Catalog, Crawler, Athena
