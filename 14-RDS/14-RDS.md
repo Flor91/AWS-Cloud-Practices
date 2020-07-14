@@ -51,7 +51,7 @@ replicación.
   base de datos.
 - Una instancia de DB es un entorno de base de datos aislado en la red privada
   en la nube.
-- Cada instancia de DB ejecuta y administra alguno de los siguientes DBMS:  
+- Cada instancia de DB ejecuta y administra alguno de los siguientes DBMS:
   `MySQL, PostgreSQL, MariaDB, Oracle, SQL Server y Amazon Aurora.`
 
 - El servicio expone un endpoint como un host y un puerto consumible por
