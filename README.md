@@ -105,6 +105,10 @@ Habilidades que se evalúan con la certificación
 15. [Big Data y Analytics](15-BigData-Analytics/15-big-data.md)
     - [Redshift]
 
+16. [Kinesis](16-Kinesis)
+
+17. [Big Data y Analytics II](17-BigData-Analytics-2)
+
 10. Kubernetes
 11. DynamoDB
 12. Datalake

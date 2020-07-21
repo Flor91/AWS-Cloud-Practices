@@ -245,6 +245,7 @@ sales/'
 table properties ('numRows'='172000');
 ```
 
+![](images/15-big-data/2973320b.png)
 
 # CONCLUSIONES
 
