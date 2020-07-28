@@ -19,5 +19,5 @@ inputs = {
   # type: string
   region = "us-east-1"
 
-  
+
 }

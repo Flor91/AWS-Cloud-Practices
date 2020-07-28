@@ -11,5 +11,5 @@ include {
 # https://registry.terraform.io/modules/terraform-aws-modules/sns/aws/2.1.0?tab=inputs
 ###########################################################
 inputs = {
-  
+
 }
