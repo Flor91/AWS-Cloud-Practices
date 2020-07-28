@@ -9,21 +9,21 @@ module "vpc" {
   public_subnets     = ["10.10.10.96/27", "10.10.10.128/27", "10.10.10.160/27"]
   enable_nat_gateway = true
   single_nat_gateway = true
-  tags               = {
+  tags = {
     Environment = "dev"
-    Owner = "me"
+    Owner       = "me"
   }
 }
 
 module "ecs_cluster" {
   source = "anrim/ecs/aws//modules/cluster"
 
-  name = "app-dev"
+  name        = "app-dev"
   vpc_id      = "${module.vpc.vpc_id}"
   vpc_subnets = ["${module.vpc.private_subnets}"]
-  tags        = {
+  tags = {
     Environment = "dev"
-    Owner = "me"
+    Owner       = "me"
   }
 }
 
@@ -35,16 +35,16 @@ module "alb" {
   domain_name     = "example.com"
   certificate_arn = "arn:aws:iam::123456789012:server-certificate/test_cert-123456789012"
   backend_sg_id   = "${module.ecs_cluster.instance_sg_id}"
-  tags            = {
+  tags = {
     Environment = "dev"
-    Owner = "me"
+    Owner       = "me"
   }
   vpc_id      = "${module.vpc.vpc_id}"
   vpc_subnets = ["${module.vpc.public_subnets}"]
 }
 
 resource "aws_ecs_task_definition" "app" {
-  family = "app-dev"
+  family                = "app-dev"
   container_definitions = <<EOF
 [
   {
@@ -73,15 +73,15 @@ EOF
 module "ecs_service_app" {
   source = "anrim/ecs/aws//modules/service"
 
-  name = "app-dev"
+  name                 = "app-dev"
   alb_target_group_arn = "${module.alb.target_group_arn}"
   cluster              = "${module.ecs_cluster.cluster_id}"
   container_name       = "nginx"
   container_port       = "80"
   log_groups           = ["app-dev-nginx"]
   task_definition_arn  = "${aws_ecs_task_definition.app.arn}"
-  tags                 = {
+  tags = {
     Environment = "dev"
-    Owner = "me"
+    Owner       = "me"
   }
 }
