@@ -1,1 +1,0 @@
-# cloudArchitect2020
