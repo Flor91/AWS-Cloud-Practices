@@ -1,0 +1,2 @@
+terraform-provider-aws* filter=lfs diff=lfs merge=lfs -text
+*.0_x4 filter=lfs diff=lfs merge=lfs -text
