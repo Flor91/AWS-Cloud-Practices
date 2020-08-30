@@ -1,0 +1,280 @@
+---
+AWSTemplateFormatVersion: '2010-09-09'
+# Sample CFN YAML to demonstrate creating a crawler
+#
+#
+#
+# Resources section defines metadata for the Data Catalog
+Parameters:
+  Alias:
+    Type: String
+    Default: 'aiouti'
+    Description: Alias to create username and resources, for example dladmin-aiouti will be your lakeformation admin
+Resources:
+  S3Bucket:
+    Type: AWS::S3::Bucket
+    Properties:
+      # Need to define a static BucketName due to a circular dependency with the AWS::SNS::TopicPolicy
+      # BucketName: !Ref CFNS3BucketName
+      BucketEncryption:
+        ServerSideEncryptionConfiguration:
+          - ServerSideEncryptionByDefault:
+              SSEAlgorithm: AES256
+      AccessControl: BucketOwnerFullControl
+      LifecycleConfiguration:
+        Rules:
+          -
+            AbortIncompleteMultipartUpload:
+              DaysAfterInitiation: 3
+            NoncurrentVersionExpirationInDays: 3
+            Status: Enabled
+      PublicAccessBlockConfiguration:
+        BlockPublicAcls: true
+        BlockPublicPolicy: true
+        IgnorePublicAcls: true
+        RestrictPublicBuckets: true
+      Tags:
+        -
+          Key: Description
+          Value: ML Transform FindMatches Demo Bucket
+      VersioningConfiguration:
+        Status: Enabled
+
+  CFNLakeAdmin:
+    Type: AWS::IAM::User
+    Properties:
+        LoginProfile:
+            Password: 'Digital2020+'
+        ManagedPolicyArns: 
+            - arn:aws:iam::aws:policy/AmazonAthenaFullAccess
+            - arn:aws:iam::aws:policy/AWSGlueConsoleFullAccess
+            - arn:aws:iam::aws:policy/AmazonSageMakerFullAccess
+        UserName: !Sub "dladmin-${Alias}"
+        Policies:
+            -
+                PolicyName: "inline-datalakeadmin"
+                PolicyDocument:
+                    Version: "2012-10-17"
+                    Statement:
+                        -
+                            Effect: "Allow"
+                            Action: 
+                                - "lakeformation:*"
+                                - "cloudtrail:DescribeTrails"
+                                - "cloudtrail:LookupEvents"
+                                - "ram:ListPrincipals"
+                                - "ram:GetResourceShareInvitations"
+                            Resource: "*"
+                        -
+                            Effect: "Deny"
+                            Action: 
+                                - "lakeformation:PutDataLakeSettings"
+                            Resource: "*"
+                        -
+                            Effect: "Allow"
+                            Action: 
+                                - "iam:CreateServiceLinkedRole"
+                            Resource: "*"
+                            Condition: 
+                                StringEquals: 
+                                    "iam:AWSServiceName": "lakeformation.amazonaws.com"
+                        -
+                            Effect: "Allow"
+                            Action: 
+                                - "iam:PutRolePolicy"
+                            Resource: !Join ['', ['arn:aws:iam::', !Ref 'AWS::AccountId', ':role/aws-service-role/lakeformation.amazonaws.com/AWSServiceRoleForLakeFormationDataAccess']]
+                        -
+                            Effect: "Allow"
+                            Action: "iam:PassRole"
+                            Resource: "arn:aws:iam::*:role/AWSGlueServiceRole*"
+                        -
+                            Effect: "Allow"
+                            Action: "iam:PassRole"
+                            Resource: "arn:aws:iam::*:role/AWSGlueServiceNotebookRole*"
+                            Condition:
+                                StringLike:
+                                    "iam:PassedToService" : "ec2.amazonaws.com"
+                        -
+                            Effect: "Allow"
+                            Action: "iam:PassRole"
+                            Resource: "arn:aws:iam::*:role/service-role/AWSGlueServiceRole*"
+                        -
+                            Effect: "Allow"
+                            Action: "iam:PassRole"
+                            Resource: !GetAtt CFNGlueServiceMLLabRole.Arn
+
+  CFNAnalyst:
+    Type: AWS::IAM::User
+    Properties:
+        LoginProfile:
+            Password: 'Digital2020+'
+        ManagedPolicyArns: 
+            - arn:aws:iam::aws:policy/AmazonS3FullAccess
+            - arn:aws:iam::aws:policy/AmazonAthenaFullAccess
+            - arn:aws:iam::aws:policy/AmazonSageMakerFullAccess
+        UserName: !Sub "dlanalyst-${Alias}"
+        Policies:
+            -
+                PolicyName: "inline-analyst"
+                PolicyDocument:
+                    Version: "2012-10-17"
+                    Statement:
+                    -
+                        Effect: "Allow"
+                        Action: 
+                            - "athena:*"
+                            - "glue:*"
+                            - "iam:List*"
+                            - "iam:Get*"
+                            - "tag:Get*"
+                        Resource: "*"
+                    -
+                        Effect: "Allow"
+                        Action: 
+                            - "lakeformation:GetDataAccess"
+                            - "sns:ListTopics"
+                            - "sns:GetTopicAttributes"
+                            - "cloudwatch:PutMetricAlarm"
+                            - "cloudwatch:DescribeAlarms"
+                            - "cloudwatch:DeleteAlarms"
+                            - "logs:*"
+                        Resource: "*"
+                    -
+                        Effect: "Allow"
+                        Action: "iam:PassRole"
+                        Resource: "arn:aws:iam::*:role/AWSGlueServiceRole*"
+                    -
+                        Effect: "Allow"
+                        Action: "iam:PassRole"
+                        Resource: "arn:aws:iam::*:role/AWSGlueServiceNotebookRole*"
+                        Condition:
+                            StringLike:
+                                "iam:PassedToService" : "ec2.amazonaws.com"
+                    -
+                        Effect: "Allow"
+                        Action: "iam:PassRole"
+                        Resource: "arn:aws:iam::*:role/service-role/AWSGlueServiceRole*"
+                    -
+                        Effect: "Allow"
+                        Action: "iam:PassRole"
+                        Resource: !GetAtt CFNGlueServiceMLLabRole.Arn
+
+  CFNGlueServiceMLLabRole:
+    Type: AWS::IAM::Role    
+    Properties:
+        #RoleName: "AWSGlueServiceRole-LF-MLLab"
+        ManagedPolicyArns: 
+            - arn:aws:iam::aws:policy/AmazonS3FullAccess
+            - arn:aws:iam::aws:policy/service-role/AWSGlueServiceRole
+            - arn:aws:iam::aws:policy/AmazonSageMakerFullAccess
+        AssumeRolePolicyDocument:
+            Version: "2012-10-17"
+            Statement:
+                -
+                    Effect: "Allow"
+                    Principal:
+                        Service:
+                            - "glue.amazonaws.com"
+                            - "lakeformation.amazonaws.com"
+                            - "lambda.amazonaws.com"
+                            - "sagemaker.amazonaws.com"
+                    Action:
+                        - "sts:AssumeRole"
+        Path: "/"
+        Policies:
+            -
+                PolicyName: "lakeformation-glue-service-inline-role"
+                PolicyDocument:
+                    Version: "2012-10-17"
+                    Statement:
+                        -
+                            Effect: "Allow"
+                            Action: 
+                                - "glue:*"
+                                - "lakeformation:*"
+                                - "iam:ListRoles"
+                                - "ec2:DescribeSecurityGroups"
+                                - "ec2:DescribeSubnets"
+                                - "ec2:DescribeVpcs"
+                                - "ec2:DescribeVpcEndpoints"
+                                - "ec2:DescribeRouteTables"
+                                - "ec2:DescribeVpcAttribute"
+                                - "ec2:DescribeKeyPairs"
+                                - "ec2:DescribeInstances"
+                                - "rds:DescribeDBInstances"
+                                - "cloudformation:DescribeStacks"
+                                - "cloudformation:GetTemplateSummary"
+                                - "dynamodb:ListTables"
+                                - "kms:ListAliases"
+                                - "kms:DescribeKey"
+                                - "cloudwatch:GetMetricData"
+                                - "cloudwatch:ListDashboards"
+                                - "logs:*"
+                                - "cloudformation:CreateStack"
+                                - "cloudformation:DeleteStack"
+                            Resource: "*"
+                        -
+                            Effect: "Allow"
+                            Action:
+                                - "ec2:RunInstances"
+                            Resource:
+                                - "arn:aws:ec2:*:*:instance/*"
+                                - "arn:aws:ec2:*:*:key-pair/*"
+                                - "arn:aws:ec2:*:*:image/*"
+                                - "arn:aws:ec2:*:*:security-group/*"
+                                - "arn:aws:ec2:*:*:network-interface/*"
+                                - "arn:aws:ec2:*:*:subnet/*"
+                                - "arn:aws:ec2:*:*:volume/*"
+                        -
+                            Effect: "Allow"
+                            Action:
+                                - "ec2:TerminateInstances"
+                                - "ec2:CreateTags"
+                                - "ec2:DeleteTags"
+                            Resource: "arn:aws:ec2:*:*:instance/*"
+                        -
+                            Effect: "Allow"
+                            Action: "iam:PassRole"
+                            Resource: "arn:aws:iam::*:role/AWSGlueServiceRole*"
+                        -
+                            Effect: "Allow"
+                            Action: "iam:PassRole"
+                            Resource: "arn:aws:iam::*:role/AWSGlueServiceNotebookRole*"
+                            Condition:
+                                StringLike:
+                                    "iam:PassedToService" : "ec2.amazonaws.com"
+                        -
+                            Effect: "Allow"
+                            Action: "iam:PassRole"
+                            Resource: "arn:aws:iam::*:role/service-role/AWSGlueServiceRole*"     
+                        -
+                            Effect: "Allow"
+                            Action: "tag:GetResources"
+                            Resource: "*"
+
+  GlueDevEndPoint:
+    Type: AWS::Glue::DevEndpoint
+    Properties:
+      Arguments: {"--enable-glue-datacatalog": "", }
+      #EndpointName: "GlueDevEndpoint-SM"
+      GlueVersion: "0.9"
+      NumberOfWorkers: 5
+      WorkerType: "G.1X"
+      RoleArn: !GetAtt CFNGlueServiceMLLabRole.Arn
+
+Outputs:
+  S3BucketName:
+    Description: S3 Bucket
+    Value: !Ref S3Bucket
+
+  DataLakeAdmin:
+    Description: Data Lake Admin
+    Value: !Ref CFNLakeAdmin
+
+  DataLakeAnalyst:
+    Description: Data Lake Analyst
+    Value: !Ref CFNAnalyst
+
+  LFGlueIAMRole:
+    Description: IAM Role for Lake Formation and Glue
+    Value: !Ref CFNGlueServiceMLLabRole

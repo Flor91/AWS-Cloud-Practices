@@ -1,0 +1,33 @@
+[
+    {
+      "name": "device",
+      "image": "${registry_docker_image}",
+      "cpu": 1024,
+      "memory": 512,
+      "entryPoint": [],
+      "environment": [
+        {
+          "name": "IOT_URI",
+          "value": "${aiouti_iot_core_uri}"
+        }
+      ],
+      "mountPoints": [
+        {
+          "sourceVolume": "certificatesvol",
+          "containerPath": "/usr/src/app/cert",
+          "readOnly": true
+        }
+      ],
+      "logConfiguration": {
+        "logDriver": "awslogs",
+        "options": {
+          "awslogs-region": "us-east-1",
+          "awslogs-group": "aiouti-device",
+          "awslogs-stream-prefix": "aiouti-ecs"
+        }
+      },
+      "volumesFrom": [],
+      "links": [],
+      "essential": true
+    }
+]

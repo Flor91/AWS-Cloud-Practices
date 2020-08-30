@@ -1,0 +1,26 @@
+{
+  "registry.terraform.io/hashicorp/archive": {
+    "hash": "h1:bzjSdD6pqVQBmcfi+Muz2rgHVDBUZNqSqyDIHbN14zI=",
+    "version": "1.3.0"
+  },
+  "registry.terraform.io/hashicorp/aws": {
+    "hash": "h1:mM6eIaG1Gcrk47TveViXBO9YjY6nDaGukbED2bdo8Mk=",
+    "version": "2.70.0"
+  },
+  "registry.terraform.io/hashicorp/external": {
+    "hash": "h1:jIFj6CgC748E2UkSiBCYwKAspDPDsSyd0MDuin+swho=",
+    "version": "1.2.0"
+  },
+  "registry.terraform.io/hashicorp/local": {
+    "hash": "h1:zpODcKdAy9V1Jqfl+gfLvnL7UVwK52QlGJP7bqDtbT4=",
+    "version": "1.4.0"
+  },
+  "registry.terraform.io/hashicorp/null": {
+    "hash": "h1:l0/ASa/TB1exgqdi33sOkFakJL2zAQBu+q5LgO5/SxI=",
+    "version": "2.1.2"
+  },
+  "registry.terraform.io/hashicorp/template": {
+    "hash": "h1:a61DkglpoCGihJWQDBO0wJovPKXm9K6GLau2l+Q6EdA=",
+    "version": "2.1.2"
+  }
+}
