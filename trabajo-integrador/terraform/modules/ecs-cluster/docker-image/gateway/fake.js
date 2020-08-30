@@ -1,5 +1,15 @@
 const random = require('./random')
 
+// random-date-generator:1.0.2 (package.json)
+//let DateGenerator = require('random-date-generator');
+//DateGenerator.getRandomDate(); // random date
+
+/*
+let startDate = new Date(2019,12,12);
+let endDate = new Date(2020, 8, 8);
+DateGenerator.getRandomDateInRange(startDate, endDate);
+*/
+
 const fake = {
   createData () {
     let deviceTypes = ["FS-15", "LF-10", "PP-5"];
