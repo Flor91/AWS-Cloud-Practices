@@ -24,7 +24,7 @@
     "npm": ">= 6.4.1"
   },
   "dependencies": {
-    "aws-iot-device-sdk": "^2.2.1",
+    "aws-iot-device-sdk": "^2.2.12",
     "aws-sdk": "^2.549.0",
     "nanoid": "^2.1.3"
   },
